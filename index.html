@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krishna Chaitanya - DevOps Engineer</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         :root {
             --background: #ffffff;
@@ -312,38 +312,7 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Visualizations */
-        .viz-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: center;
-        }
-
-        .viz-card {
-            flex: 1;
-            min-width: 300px;
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px var(--shadow);
-            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
-        }
-
-        .viz-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px var(--shadow);
-        }
-
-        .viz-title {
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-            color: var(--accent);
-            transition: color 0.3s;
-        }
-
-        /* Game */
+        /* Game Section */
         #game-container {
             width: 100%;
             background-color: var(--card-bg);
@@ -351,21 +320,33 @@
             padding: 1.5rem;
             box-shadow: 0 4px 6px var(--shadow);
             transition: background-color 0.3s, box-shadow 0.3s;
+            margin-bottom: 3rem;
         }
 
-        #game-header {
+        #game-canvas {
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .game-controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
+            margin: 1rem 0;
         }
 
-        #game-controls {
+        .score-container {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        .button-container {
             display: flex;
             gap: 1rem;
-            flex-wrap: wrap;
         }
 
         .game-button {
@@ -383,80 +364,17 @@
             background-color: var(--secondary);
         }
 
-        #game-canvas {
-            width: 100%;
-            height: 400px;
-            border: 2px solid var(--accent);
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
+        .game-instructions {
             background-color: var(--subtle);
-            transition: border-color 0.3s, background-color 0.3s;
-        }
-
-        /* Education */
-        .education-item {
-            margin-bottom: 1.5rem;
-            background-color: var(--card-bg);
+            padding: 1rem;
             border-radius: 8px;
-            padding: 1.5rem;
-            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
-            box-shadow: 0 4px 8px var(--shadow);
-        }
-
-        .education-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px var(--shadow);
-        }
-
-        .education-year {
-            color: var(--accent);
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-
-        .education-degree {
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin: 0.5rem 0;
-        }
-
-        /* Certifications */
-        .cert-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .cert-card {
-            flex: 1;
-            min-width: 200px;
-            max-width: 250px;
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px var(--shadow);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
-        }
-
-        .cert-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px var(--shadow);
-        }
-
-        .cert-logo {
-            width: 80px;
-            height: 80px;
             margin-bottom: 1rem;
+            font-size: 0.9rem;
         }
 
-        .cert-name {
-            text-align: center;
-            font-weight: 600;
+        canvas {
+            display: block;
+            margin: 0 auto;
         }
 
         /* Footer */
@@ -474,39 +392,6 @@
             justify-content: center;
             gap: 1.5rem;
             margin: 1rem 0;
-        }
-
-        /* Game elements */
-        .game-object {
-            position: absolute;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-
-        .naruto {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="30" r="20" fill="%23FDB813"/><rect x="40" y="50" width="20" height="30" fill="%23FF6700"/><rect x="30" y="50" width="10" height="20" fill="%23FF6700" transform="rotate(20, 30, 50)"/><rect x="60" y="50" width="10" height="20" fill="%23FF6700" transform="rotate(-20, 70, 50)"/><rect x="40" y="80" width="8" height="20" fill="%230057B8"/><rect x="52" y="80" width="8" height="20" fill="%230057B8"/><rect x="45" y="15" width="10" height="5" fill="%23000"/><circle cx="45" cy="17" r="3" fill="%23FDB813"/><circle cx="43" cy="25" r="2" fill="%23000"/><circle cx="57" cy="25" r="2" fill="%23000"/><path d="M48,35 Q50,40 52,35" stroke="%23000" fill="none"/></svg>');
-        }
-
-        .obstacle {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><path d="M10,10 L50,10 L50,50 L10,50 Z" fill="%236b21a8"/><text x="30" y="35" text-anchor="middle" font-size="16" fill="white">AWS</text></svg>');
-        }
-
-        .scroll {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="%23FDB813"/><text x="20" y="25" text-anchor="middle" font-size="16" fill="white">+</text></svg>');
-        }
-
-        .gameover {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            text-align: center;
-            display: none;
         }
 
         /* Responsive */
@@ -537,6 +422,10 @@
                 right: 10px;
                 width: 35px;
                 height: 35px;
+            }
+
+            #game-canvas {
+                height: 300px;
             }
         }
     </style>
@@ -569,9 +458,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#experience">Experience</a></li>
-            <li><a href="#visualizations">Visualizations</a></li>
             <li><a href="#game">Naruto Game</a></li>
-            <li><a href="#education">Education</a></li>
         </ul>
     </nav>
 
@@ -707,4 +594,139 @@
         <div class="experience-item">
             <div class="experience-header">
                 <div>
-                    <div
+                    <div class="company-title">Optimuss Inc.</div>
+                    <div class="job-title">Cloud Engineer</div>
+                </div>
+                <div class="job-date">October 2016 - September 2017</div>
+            </div>
+            <div class="experience-description">
+                <ul>
+                    <li>Managed AWS services like EC2, VPC, Subnets, IAM, SSL Certificates, S3, CloudFormation, CloudWatch, ELB, RDS, SQS</li>
+                    <li>Migrated web teams data from on-prem Oracle to AWS DynamoDB, Aurora PostgreSQL, Aurora MySQL using SCT, DMS & AWS Glue</li>
+                    <li>Automated configuration management and deployments using Ansible Playbooks and YAML</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="game" class="game">
+        <h2>Naruto Game</h2>
+        <div id="game-container">
+            <div class="game-instructions">
+                <p><strong>Instructions:</strong> Help Naruto collect scrolls and avoid obstacles! Use your keyboard arrow keys or WASD to move Naruto. Press SPACE to throw shurikens at obstacles.</p>
+            </div>
+            <div id="game-canvas"></div>
+            <div class="game-controls">
+                <div class="score-container">
+                    Score: <span id="score">0</span>
+                </div>
+                <div class="button-container">
+                    <button id="start-button" class="game-button">Start Game</button>
+                    <button id="reset-button" class="game-button">Reset Game</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Krishna Chaitanya</p>
+        <div class="social-links">
+            <a href="#">GitHub</a>
+            <a href="#">LinkedIn</a>
+        </div>
+    </footer>
+
+    <script>
+        // Dark mode toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const html = document.documentElement;
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            html.setAttribute('data-theme', savedTheme);
+            
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = html.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                html.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+
+            // Initialize the Three.js Naruto Game
+            initNarutoGame();
+        });
+
+        // Naruto Game with Three.js
+        function initNarutoGame() {
+            // Game variables
+            let scene, camera, renderer;
+            let naruto, ground, plane;
+            let obstacles = [];
+            let scrolls = [];
+            let shurikens = [];
+            let score = 0;
+            let gameActive = false;
+            let gameOver = false;
+            let gameSpeed = 0.2;
+            let narutoSpeed = 0.15;
+            let clock = new THREE.Clock();
+            let jumping = false;
+            let jumpHeight = 3;
+            let gravity = 0.1;
+            let velocity = 0;
+            let moveLeft = false;
+            let moveRight = false;
+            let laneWidth = 2;
+            let currentLane = 0; // -1: left, 0: center, 1: right
+            let spawnTimer = 0;
+            let scoreDisplay = document.getElementById('score');
+            let gameContainer = document.getElementById('game-canvas');
+
+            // Setup scene
+            function setupScene() {
+                // Create scene
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x87ceeb); // Sky blue background
+
+                // Create camera
+                camera = new THREE.PerspectiveCamera(75, gameContainer.clientWidth / gameContainer.clientHeight, 0.1, 1000);
+                camera.position.set(0, 5, 10);
+                camera.lookAt(0, 0, 0);
+
+                // Create renderer
+                renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(gameContainer.clientWidth, gameContainer.clientHeight);
+                gameContainer.appendChild(renderer.domElement);
+
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    renderer.setSize(gameContainer.clientWidth, gameContainer.clientHeight);
+                    camera.aspect = gameContainer.clientWidth / gameContainer.clientHeight;
+                    camera.updateProjectionMatrix();
+                });
+
+                // Add lights
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+                scene.add(ambientLight);
+
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+                directionalLight.position.set(5, 10, 7.5);
+                scene.add(directionalLight);
+
+                // Create ground (road)
+                const groundGeometry = new THREE.PlaneGeometry(laneWidth * 3, 1000);
+                const groundMaterial = new THREE.MeshStandardMaterial({ 
+                    color: 0x333333, 
+                    side: THREE.DoubleSide,
+                    roughness: 0.8
+                });
+                ground = new THREE.Mesh(groundGeometry, groundMaterial);
+                ground.rotation.x = -Math.PI / 2;
+                ground.position.y = 0;
+                ground.position.z = -50; // Extend into the distance
+                scene.add(ground);
+
+                // Add lane markings
+                for (let i = -1
