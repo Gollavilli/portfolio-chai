@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishna Chaitanya - DevOps Engineer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --background: #ffffff;
+            --text: #202020;
+            --accent: #6b21a8; /* Purple accent color */
+            --secondary: #4361ee;
+            --subtle: #f8f9fa;
+            --border: #e9ecef;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --purple-border: #6b21a8;
+        }
+
+        [data-theme="dark"] {
+            --background: #121212;
+            --text: #e0e0e0;
+            --accent: #9d4edd; /* Lighter purple for dark mode */
+            --secondary: #4cc9f0;
+            --subtle: #1e1e1e;
+            --border: #333333;
+            --card-bg: #1e1e1e;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --purple-border: #9d4edd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: background-color 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            transition: color 0.3s;
+        }
+
+        .contact-info {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info a {
+            margin: 0 0.5rem;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            background-color: var(--subtle);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Company Logos */
+        .company-logos {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .company-logo {
+            width: 100px;
+            height: auto;
+            transition: transform 0.3s;
+        }
+
+        .company-logo:hover {
+            transform: scale(1.1);
+        }
+
+        /* Navigation */
+        nav {
+            margin: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.2s, background-color 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Section Common */
+        section {
+            margin-bottom: 3rem;
+            border-left: 3px solid var(--purple-border); /* Purple border */
+            padding-left: 1.5rem;
+            transition: border-color 0.3s;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+            color: var(--accent);
+            transition: color 0.3s;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: background-color 0.3s;
+        }
+
+        /* About */
+        .about p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .summary-highlight {
+            background-color: var(--subtle);
+            border-left: 3px solid var(--accent);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-category {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px var(--shadow);
+        }
+
+        .skill-category h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: var(--accent);
+            transition: color 0.3s;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .skill-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            transition: color 0.3s;
+        }
+
+        /* Experience */
+        .experience-item {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            transition: border-color 0.3s;
+        }
+
+        .experience-item:last-child {
+            border-bottom: none;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .company-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .job-title {
+            color: var(--accent);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .job-date {
+            color: var(--accent);
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .experience-description ul {
+            margin-left: 1.5rem;
+        }
+
+        .experience-description li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Game Section */
+        #game-container {
+            width: 100%;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px var(--shadow);
+            transition: background-color 0.3s, box-shadow 0.3s;
+            margin-bottom: 3rem;
+        }
+
+        #game-canvas {
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        .score-container {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        .button-container {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .game-button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .game-button:hover {
+            background-color: var(--secondary);
+        }
+
+        .game-instructions {
+            background-color: var(--subtle);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text);
+            transition: border-color 0.3s, color 0.3s;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .experience-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .company-logos {
+                gap: 1rem;
+            }
+
+            .company-logo {
+                width: 80px;
+            }
+
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 35px;
+                height: 35px;
+            }
+
+            #game-canvas {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">
+        🌓
+    </button>
+
+    <header>
+        <h1>Emperor Chai</h1>
+        <div class="badges">
+            <span class="badge">AWS Certified Developer</span>
+            <span class="badge">AWS Solutions Architect</span>
+            <span class="badge">Terraform Associate</span>
+        </div>
+        <div class="company-logos">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgNzAiPjxwYXRoIGZpbGw9IiNlZDFlNzkiIGQ9Ik0wIDBoMjQwdjcwSDB6Ii8+PHBhdGggZD0iTTUzLjkgNTVINDFWMTVoMTIuOWMxMy4xIDAgMjIuNSA3LjkgMjIuNSAyMHMtOS40IDIwLTIyLjUgMjBtLjEtMzIuOUg0OXYyNS43aDVjOS4xIDAgMTQuNC02IDAtMTQuNCAxNGgtMTQgMTQuNC01LjdoLjZaTTgxLjggNTVoLTcuNlYxNWg3LjZ2MTUuN2MxLjktMi43IDUuMS00LjMgOS4xLTQuMyA3LjggMCAxMy4yIDYuMiAxMy4yIDE0LjRTOTguNyA1NSA5MC45IDU1Yy0zLjkgMC03LjEtMS42LTkuMS00LjN2NC4zWm05LjUtNi40YzQuNSAwIDcuNi0zLjYgNy42LTcuOXMtMy4yLTcuOS03LjYtNy45Yy00LjUgMC03LjcgMy42LTcuNyA3LjlzMy4yIDcuOSA3LjcgNy45em0zOC45IDcuMmMtOC43IDAtMTUuNC03LjEtMTUuNC0xNC42IDAtNy41IDYuNy0xNC42IDE1LjQtMTQuNiA4LjggMCAxNS41IDcuMSAxNS41IDE0LjYgMCA3LjUtNi43IDE0LjYtMTUuNSAxNC42bTAtMjIuM2MtNC4zIDAtNy44IDMuNS03LjggNy43IDAgNC4zIDMuNCA3LjcgNy44IDcuNyA0LjMgMCA3LjgtMy41IDcuOC03LjcgMC00LjMtMy40LTcuNy03LjgtNy43bTQxIDIxLjVoLTcuNnYtMjhoNy42djQuM2MxLjktMi43IDUuMS00LjMgOS4xLTQuMyA3LjggMCAxMy4yIDYuMiAxMy4yIDE0LjRTMTgwLjEgNTUgMTcyLjMgNTVjLTMuOSAwLTcuMS0xLjYtOS4xLTQuM3Y0LjNabTkuNS02LjRjNC41IDAgNy42LTMuNiA3LjYtNy45cy0zLjItNy45LTcuNi03LjljLTQuNSAwLTcuNyAzLjYtNy43IDcuOXMzLjIgNy45IDcuNyA3LjkiIGZpbGw9IiNmZmYiLz48L3N2Zz4=" alt="Experian" class="company-logo">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgNzAiPjxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Ik0wIDBoMjQwdjcwSDB6Ii8+PHBhdGggZmlsbD0iI0VEMUMyNCIgZD0iTTExOS43IDYyLjloLjVsNDcuMS0yN3YtLjVsLTQ3LjEtMjdoLS41TDcyLjcgMzUuNHYuNWw0NyAyN3oiLz48L3N2Zz4=" alt="Verizon" class="company-logo">
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#game">Naruto Game</a></li>
+        </ul>
+    </nav>
+
+    <section id="about" class="about">
+        <h2>About Me</h2>
+        <div class="summary-highlight">
+            <p>I'm Krishna Chaitanya, a Senior DevOps Engineer with 9+ years of experience specializing in cloud infrastructure, automation, and CI/CD pipelines. Currently at Experian, I architect and implement scalable AWS solutions while previously driving cloud transformation at Verizon. My expertise spans Kubernetes, Terraform, AWS, and modern DevOps practices.</p>
+        </div>
+        <p>
+            With 9 years of IT experience as a DevOps Engineer, I specialize in Build/Release management, Infrastructure Security, and Cloud Computing. My expertise lies in creating automation solutions that enhance productivity and streamline workflows.
+        </p>
+        <p>
+            I have extensive experience deploying applications using Jenkins, Azure DevOps CI/CD pipelines for containerized applications (Spring boot & Tomcat microservices), GitLab, JFrog Artifactory, Docker, and Kubernetes. Throughout my career, I've implemented infrastructure as code solutions with Terraform and CloudFormation.
+        </p>
+        <p>
+            Most recently, I've been building intelligent systems using Amazon Bedrock and Lang Chain, creating autonomous, feedback-adaptive architectures that leverage AI for DevOps automation. My passion for continuous learning has led me to explore cutting-edge technologies while maintaining robust, secure infrastructure.
+        </p>
+    </section>
+
+    <section id="skills" class="skills">
+        <h2>Skills & Expertise</h2>
+        <div class="summary-highlight">
+            <p>My technical skills span the full DevOps spectrum with particular strengths in AWS cloud architecture, containerization with Docker and Kubernetes, IaC with Terraform, and CI/CD pipeline development. I'm proficient in Python and Bash scripting for automation, and have experience implementing security best practices across cloud environments.</p>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Cloud Computing</h3>
+                <ul class="skill-list">
+                    <li>AWS (EC2, S3, Lambda)</li>
+                    <li>ECS/EKS</li>
+                    <li>CloudFormation</li>
+                    <li>AWS Security Services</li>
+                    <li>CloudWatch Monitoring</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>DevOps Tools</h3>
+                <ul class="skill-list">
+                    <li>Terraform</li>
+                    <li>Ansible</li>
+                    <li>Chef</li>
+                    <li>Infrastructure as Code</li>
+                    <li>AWS CloudFormation</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Programming</h3>
+                <ul class="skill-list">
+                    <li>Python</li>
+                    <li>Bash/Shell</li>
+                    <li>Groovy</li>
+                    <li>Ruby</li>
+                    <li>Boto3 (AWS SDK)</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>CI/CD & Automation</h3>
+                <ul class="skill-list">
+                    <li>Jenkins</li>
+                    <li>GitLab CI</li>
+                    <li>Azure DevOps</li>
+                    <li>JFrog Artifactory</li>
+                    <li>AWS CodePipeline</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Containerization</h3>
+                <ul class="skill-list">
+                    <li>Docker</li>
+                    <li>Kubernetes</li>
+                    <li>Helm</li>
+                    <li>OpenShift</li>
+                    <li>Container Orchestration</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Monitoring & Security</h3>
+                <ul class="skill-list">
+                    <li>Prometheus</li>
+                    <li>Grafana</li>
+                    <li>ELK Stack</li>
+                    <li>CloudWatch</li>
+                    <li>CyberArk/HashiCorp Vault</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="experience">
+        <h2>Experience</h2>
+        
+        <div class="experience-item">
+            <div class="experience-header">
+                <div>
+                    <div class="company-title">Experian</div>
+                    <div class="job-title">Sr. DevOps Engineer</div>
+                </div>
+                <div class="job-date">July 2021 - Present</div>
+            </div>
+            <div class="experience-description">
+                <ul>
+                    <li>Design, deploy, document, and support cloud platform capabilities using AWS best practices (fault tolerant, High Availability, security)</li>
+                    <li>Design, deploy, document, and support CI/CD tools such as Code Build and Code Pipeline to streamline deployments and infrastructure updates</li>
+                    <li>Built an intelligent Jira issue resolution system using Amazon Bedrock, Lang Chain, and OpenSearch Serverless</li>
+                    <li>Engineered an autonomous, feedback-adaptive architecture leveraging multi-model orchestration through Bedrock Agents</li>
+                    <li>Lead technical operations projects from requirements, to design, to implementation, to operations</li>
+                    <li>Perform Kubernetes AMI Security Patch upgrades automated the monthly patching process with Karpenter/Fargate</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="experience-item">
+            <div class="experience-header">
+                <div>
+                    <div class="company-title">Perigon Infotech Inc. (Verizon Wireless)</div>
+                    <div class="job-title">Cloud DevOps Engineer</div>
+                </div>
+                <div class="job-date">October 2017 - July 2021</div>
+            </div>
+            <div class="experience-description">
+                <ul>
+                    <li>Implemented Terraform at an enterprise level, and automated complete deployment process for infrastructure</li>
+                    <li>Created and managed enterprise clusters for Kubernetes and automated complete deployment process</li>
+                    <li>Built Enterprise level hardened AMI's for all OS with a blend of CIS 1 & 2 benchmark</li>
+                    <li>Developed Continuous Deployment pipeline by integrating Jenkins with Terraform</li>
+                    <li>Built Text analytics platform to extract, redact PII data from huge volumes of data streamed from Call connect & other IOT devices</li>
+                    <li>Used Cloudwatch Synthetics to monitor/secure public websites</li>
+                    <li>Migrated and re-strategized the use of multiple NAT/IGW to different VPCs & accounts</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="experience-item">
+            <div class="experience-header">
+                <div>
+                    <div class="company-title">Optimuss Inc.</div>
+                    <div class="job-title">Cloud Engineer</div>
+                </div>
+                <div class="job-date">October 2016 - September 2017</div>
+            </div>
+            <div class="experience-description">
+                <ul>
+                    <li>Managed AWS services like EC2, VPC, Subnets, IAM, SSL Certificates, S3, CloudFormation, CloudWatch, ELB, RDS, SQS</li>
+                    <li>Migrated web teams data from on-prem Oracle to AWS DynamoDB, Aurora PostgreSQL, Aurora MySQL using SCT, DMS & AWS Glue</li>
+                    <li>Automated configuration management and deployments using Ansible Playbooks and YAML</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="game" class="game">
+        <h2>Naruto Game</h2>
+        <div id="game-container">
+            <div class="game-instructions">
+                <p><strong>Instructions:</strong> Help Naruto collect scrolls and avoid obstacles! Use your keyboard arrow keys or WASD to move Naruto. Press SPACE to throw shurikens at obstacles.</p>
+            </div>
+            <div id="game-canvas"></div>
+            <div class="game-controls">
+                <div class="score-container">
+                    Score: <span id="score">0</span>
+                </div>
+                <div class="button-container">
+                    <button id="start-button" class="game-button">Start Game</button>
+                    <button id="reset-button" class="game-button">Reset Game</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Krishna Chaitanya</p>
+        <div class="social-links">
+            <a href="#">GitHub</a>
+            <a href="#">LinkedIn</a>
+        </div>
+    </footer>
+
+    <script>
+        // Dark mode toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const html = document.documentElement;
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            html.setAttribute('data-theme', savedTheme);
+            
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = html.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                html.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+
+            // Initialize the Three.js Naruto Game
+            initNarutoGame();
+        });
+
+        // Naruto Game with Three.js
+        function initNarutoGame() {
+            // Game variables
+            let scene, camera, renderer;
+            let naruto, ground, plane;
+            let obstacles = [];
+            let scrolls = [];
+            let shurikens = [];
+            let score = 0;
+            let gameActive = false;
+            let gameOver = false;
+            let gameSpeed = 0.2;
+            let narutoSpeed = 0.15;
+            let clock = new THREE.Clock();
+            let jumping = false;
+            let jumpHeight = 3;
+            let gravity = 0.1;
+            let velocity = 0;
+            let moveLeft = false;
+            let moveRight = false;
+            let laneWidth = 2;
+            let currentLane = 0; // -1: left, 0: center, 1: right
+            let spawnTimer = 0;
+            let scoreDisplay = document.getElementById('score');
+            let gameContainer = document.getElementById('game-canvas');
+
+            // Setup scene
+            function setupScene() {
+                // Create scene
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x87ceeb); // Sky blue background
+
+                // Create camera
+                camera = new THREE.PerspectiveCamera(75, gameContainer.clientWidth / gameContainer.clientHeight, 0.1, 1000);
+                camera.position.set(0, 5, 10);
+                camera.lookAt(0, 0, 0);
+
+                // Create renderer
+                renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(gameContainer.clientWidth, gameContainer.clientHeight);
+                gameContainer.appendChild(renderer.domElement);
+
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    renderer.setSize(gameContainer.clientWidth, gameContainer.clientHeight);
+                    camera.aspect = gameContainer.clientWidth / gameContainer.clientHeight;
+                    camera.updateProjectionMatrix();
+                });
+
+                // Add lights
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+                scene.add(ambientLight);
+
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+                directionalLight.position.set(5, 10, 7.5);
+                scene.add(directionalLight);
+
+                // Create ground (road)
+                const groundGeometry = new THREE.PlaneGeometry(laneWidth * 3, 1000);
+                const groundMaterial = new THREE.MeshStandardMaterial({ 
+                    color: 0x333333, 
+                    side: THREE.DoubleSide,
+                    roughness: 0.8
+                });
+                ground = new THREE.Mesh(groundGeometry, groundMaterial);
+                ground.rotation.x = -Math.PI / 2;
+                ground.position.y = 0;
+                ground.position.z = -50; // Extend into the distance
+                scene.add(ground);
+
+                // Add lane markings
+                for (let i = -1
